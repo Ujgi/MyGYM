@@ -9,13 +9,13 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = MyGYM
 build_property.RootNamespace = MyGYM
-build_property.ProjectDir = /Users/utkusekeroglu/Desktop/RiderProjects/MyGym/
+build_property.ProjectDir = /Users/utkusekeroglu/Desktop/RiderProjects/MyGYM/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = /Users/utkusekeroglu/Desktop/RiderProjects/MyGym
+build_property.MSBuildProjectDirectory = /Users/utkusekeroglu/Desktop/RiderProjects/MyGYM
 build_property._RazorSourceGeneratorDebug = 
 
 [/Users/utkusekeroglu/Desktop/RiderProjects/MyGYM/Views/Home/Index.cshtml]
@@ -28,6 +28,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [/Users/utkusekeroglu/Desktop/RiderProjects/MyGYM/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL0Vycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/utkusekeroglu/Desktop/RiderProjects/MyGYM/Views/Shared/_LoginPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19Mb2dpblBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/utkusekeroglu/Desktop/RiderProjects/MyGYM/Views/Shared/_ValidationScriptsPartial.cshtml]
