@@ -18,8 +18,16 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = /Users/utkusekeroglu/Desktop/RiderProjects/MyGYM
 build_property._RazorSourceGeneratorDebug = 
 
+[/Users/utkusekeroglu/Desktop/RiderProjects/MyGYM/Views/Antrenor/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQW50cmVub3IvRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/utkusekeroglu/Desktop/RiderProjects/MyGYM/Views/Antrenor/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQW50cmVub3IvRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/utkusekeroglu/Desktop/RiderProjects/MyGYM/Views/Antrenor/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQW50cmVub3IvSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/utkusekeroglu/Desktop/RiderProjects/MyGYM/Views/Home/Index.cshtml]
