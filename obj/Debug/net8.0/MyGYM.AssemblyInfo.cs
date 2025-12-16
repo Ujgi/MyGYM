@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MyGYM")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a16f2ca33812d5f36e41d81da731a3b4c24e1557")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+00a4b573b4721a23b534265e3187a06946598a02")]
 [assembly: System.Reflection.AssemblyProductAttribute("MyGYM")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MyGYM")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

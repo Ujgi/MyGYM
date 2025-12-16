@@ -1,0 +1,52 @@
+@model MyGYM.Models.Antrenor
+
+@{
+    ViewData["Title"] = "Yeni Antrenör Ekle";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0">Yeni Antrenör Ekle</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Create">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="FullName" class="form-label">Ad Soyad</label>
+                            <input asp-for="FullName" class="form-control" placeholder="Örn: Ahmet Yılmaz" />
+                            <span asp-validation-for="FullName" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Expertise" class="form-label">Uzmanlık Alanı</label>
+                            <input asp-for="Expertise" class="form-control" placeholder="Örn: Fitness, Pilates" />
+                            <span asp-validation-for="Expertise" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="ImageUrl" class="form-label">Profil Resmi (URL)</label>
+                            <input asp-for="ImageUrl" class="form-control" placeholder="https://..." />
+                            <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                            <small class="text-muted">İnternetten bir resim linki yapıştırabilirsiniz.</small>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-check-circle"></i> Kaydet
+                            </button>
+                            <a asp-action="Index" class="btn btn-secondary">Listeye Dön</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
