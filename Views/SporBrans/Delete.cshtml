@@ -1,0 +1,15 @@
+@model MyGYM.Models.SporBrans
+
+@{ ViewData["Title"] = "Sil"; }
+
+<div class="container mt-5">
+    <div class="alert alert-danger">
+        <h3>Bu hizmeti silmek istediğine emin misin?</h3>
+        <p><strong>@Model.Name</strong> (Silindikten sonra geri alınamaz)</p>
+    </div>
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">Evet, Sil</button>
+        <a asp-action="Index" class="btn btn-secondary">İptal</a>
+    </form>
+</div>

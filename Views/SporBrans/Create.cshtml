@@ -1,0 +1,35 @@
+@model MyGYM.Models.SporBrans
+
+@{ ViewData["Title"] = "Yeni Hizmet Ekle"; }
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4>Yeni Hizmet Ekle</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Create">
+                        <div class="mb-3">
+                            <label asp-for="Name" class="form-label">Hizmet Adı</label>
+                            <input asp-for="Name" class="form-control" placeholder="Örn: Pilates" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Duration" class="form-label">Süre (Dakika)</label>
+                            <input asp-for="Duration" class="form-control" type="number" />
+                            <span asp-validation-for="Duration" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Price" class="form-label">Ücret (TL)</label>
+                            <input asp-for="Price" class="form-control" type="number" />
+                            <span asp-validation-for="Price" class="text-danger"></span>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">Kaydet</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
