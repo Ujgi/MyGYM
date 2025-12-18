@@ -6,7 +6,7 @@ using MyGYM.Models;
 
 namespace MyGYM.Controllers
 {
-    [Authorize(Roles = "Admin")] // Sadece Admin yönetebilir
+    [Authorize]
     public class SporBransController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -23,6 +23,7 @@ namespace MyGYM.Controllers
         }
 
         // 2. EKLEME SAYFASI (Create - GET)
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
@@ -31,6 +32,7 @@ namespace MyGYM.Controllers
         // 3. EKLEME İŞLEMİ (Create - POST)
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(SporBrans service)
         {
             if (ModelState.IsValid)
@@ -43,6 +45,7 @@ namespace MyGYM.Controllers
         }
 
         // 4. SİLME SAYFASI (Delete - GET)
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) return NotFound();
@@ -56,6 +59,7 @@ namespace MyGYM.Controllers
         // 5. SİLME İŞLEMİ (Delete - POST)
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var service = await _context.SporBranslar.FindAsync(id);

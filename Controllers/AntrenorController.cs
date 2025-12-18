@@ -6,8 +6,7 @@ using MyGYM.Models;
 
 namespace MyGYM.Controllers
 {
-    // Sadece Admin yetkisi olanlar bu sayfaları görebilir
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     public class AntrenorController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -31,6 +30,7 @@ namespace MyGYM.Controllers
         // ==========================================
 
         // Formu Göster (GET)
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
@@ -39,6 +39,7 @@ namespace MyGYM.Controllers
         // Formu Kaydet (POST)
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(Antrenor trainer)
         {
             if (ModelState.IsValid)
@@ -55,6 +56,7 @@ namespace MyGYM.Controllers
         // ==========================================
 
         // Düzenleme Formunu Göster (GET)
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null) return NotFound();
@@ -68,6 +70,7 @@ namespace MyGYM.Controllers
         // Değişiklikleri Kaydet (POST)
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, Antrenor trainer)
         {
             if (id != trainer.Id) return NotFound();
@@ -96,6 +99,7 @@ namespace MyGYM.Controllers
         // ==========================================
 
         // Silme Onay Ekranını Göster (GET)
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) return NotFound();
@@ -111,6 +115,7 @@ namespace MyGYM.Controllers
         // Silme İşlemini Gerçekleştir (POST)
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var trainer = await _context.Antrenors.FindAsync(id);
