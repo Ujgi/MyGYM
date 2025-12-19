@@ -262,6 +262,32 @@ namespace MyGYM.Migrations
                     b.ToTable("Antrenors");
                 });
 
+            modelBuilder.Entity("MyGYM.Models.Appointment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("MemberId")
+                        .HasColumnType("text");
+
+                    b.Property<int>("TrainerId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MemberId");
+
+                    b.HasIndex("TrainerId");
+
+                    b.ToTable("Appointments");
+                });
+
             modelBuilder.Entity("MyGYM.Models.SporBrans", b =>
                 {
                     b.Property<int>("Id")
@@ -353,6 +379,23 @@ namespace MyGYM.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("MyGYM.Models.Appointment", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Member")
+                        .WithMany()
+                        .HasForeignKey("MemberId");
+
+                    b.HasOne("MyGYM.Models.Antrenor", "Trainer")
+                        .WithMany()
+                        .HasForeignKey("TrainerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Member");
+
+                    b.Navigation("Trainer");
                 });
 #pragma warning restore 612, 618
         }

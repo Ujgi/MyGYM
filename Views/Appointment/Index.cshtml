@@ -1,0 +1,76 @@
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
+@model IEnumerable<MyGYM.Models.Appointment>
+
+@{
+    ViewData["Title"] = "Randevu Sistemi";
+    var currentUser = await UserManager.GetUserAsync(User);
+}
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between mb-4">
+        <h2>📅 Ders Programı ve Randevular</h2>
+        @if (User.IsInRole("Admin"))
+        {
+            <a asp-action="Create" class="btn btn-success">+ Yeni Müsaitlik Ekle</a>
+        }
+    </div>
+
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            // KART RENGİ AYARI
+            // Boşsa: Yeşil (success), Doluysa: Gri (secondary), Benimse: Mavi (primary)
+            string cardClass = "bg-light";
+            string statusText = "Müsait";
+
+            if (!item.IsAvailable)
+            {
+                if (item.MemberId == currentUser?.Id)
+                {
+                    cardClass = "border-primary border-3"; // Benim randevum
+                    statusText = "Sizin Randevunuz ✅";
+                }
+                else
+                {
+                    cardClass = "bg-secondary text-white opacity-75"; // Başkası almış
+                    statusText = "Dolu ❌";
+                }
+            }
+            else
+            {
+                cardClass = "border-success"; // Müsait
+            }
+
+            <div class="col-md-4 mb-4">
+                <div class="card @cardClass shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Trainer?.FullName</h5>
+                        <p class="card-text">
+                            <strong>Uzmanlık:</strong> @item.Trainer?.Expertise <br/>
+                            <strong>Tarih:</strong> @item.Date.ToString("dd.MM.yyyy") <br/>
+                            <strong>Saat:</strong> @item.Date.ToString("HH:mm")
+                        </p>
+                        <hr/>
+                        <p class="fw-bold">@statusText</p>
+
+                        @if (item.IsAvailable)
+                        {
+                            <form asp-action="Book" method="post">
+                                <input type="hidden" name="id" value="@item.Id" />
+                                <button type="submit" class="btn btn-success w-100">Randevu Al</button>
+                            </form>
+                        }
+                        else if (item.MemberId == currentUser?.Id || User.IsInRole("Admin"))
+                        {
+                            <form asp-action="Cancel" method="post">
+                                <input type="hidden" name="id" value="@item.Id" />
+                                <button type="submit" class="btn btn-danger w-100">İptal Et</button>
+                            </form>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

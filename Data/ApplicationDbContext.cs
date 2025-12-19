@@ -15,4 +15,6 @@ public class ApplicationDbContext:IdentityDbContext
     public DbSet<Antrenor> Antrenors { get; set; }
     public DbSet<SporBrans> SporBranslar { get; set; }
 
+    public DbSet<Appointment> Appointments { get; set; }
+
 }

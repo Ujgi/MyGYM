@@ -1,0 +1,22 @@
+@model MyGYM.Models.Appointment
+
+@{ ViewData["Title"] = "Müsaitlik Ekle"; }
+
+<div class="container mt-5">
+    <h2>🕒 Yeni Müsaitlik Zamanı Ekle (Admin)</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div class="mb-3">
+                    <label class="form-label">Antrenör Seç</label>
+                    <select asp-for="TrainerId" class="form-control" asp-items="ViewBag.TrainerId"></select>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Date" class="form-label">Tarih ve Saat</label>
+                    <input asp-for="Date" class="form-control" type="datetime-local" />
+                </div>
+                <button type="submit" class="btn btn-primary">Müsaitliği Aç</button>
+            </form>
+        </div>
+    </div>
+</div>
