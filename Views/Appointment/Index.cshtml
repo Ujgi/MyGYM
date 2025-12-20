@@ -1,76 +1,170 @@
-@using Microsoft.AspNetCore.Identity
-@inject UserManager<IdentityUser> UserManager
-@model IEnumerable<MyGYM.Models.Appointment>
+@model MyGYM.Models.AppointmentFilterViewModel
 
 @{
-    ViewData["Title"] = "Randevu Sistemi";
-    var currentUser = await UserManager.GetUserAsync(User);
+    ViewData["Title"] = "Randevu Listesi";
 }
 
-<div class="container mt-5">
-    <div class="d-flex justify-content-between mb-4">
-        <h2>📅 Ders Programı ve Randevular</h2>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="text-primary"><i class="bi bi-calendar-check"></i> Randevu Sistemi</h2>
         @if (User.IsInRole("Admin"))
         {
-            <a asp-action="Create" class="btn btn-success">+ Yeni Müsaitlik Ekle</a>
+            <a asp-action="Create" class="btn btn-success"><i class="bi bi-plus-lg"></i> Yeni Ders Ekle</a>
         }
     </div>
 
-    <div class="row">
-        @foreach (var item in Model)
-        {
-            // KART RENGİ AYARI
-            // Boşsa: Yeşil (success), Doluysa: Gri (secondary), Benimse: Mavi (primary)
-            string cardClass = "bg-light";
-            string statusText = "Müsait";
-
-            if (!item.IsAvailable)
-            {
-                if (item.MemberId == currentUser?.Id)
-                {
-                    cardClass = "border-primary border-3"; // Benim randevum
-                    statusText = "Sizin Randevunuz ✅";
-                }
-                else
-                {
-                    cardClass = "bg-secondary text-white opacity-75"; // Başkası almış
-                    statusText = "Dolu ❌";
-                }
-            }
-            else
-            {
-                cardClass = "border-success"; // Müsait
-            }
-
-            <div class="col-md-4 mb-4">
-                <div class="card @cardClass shadow-sm h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">@item.Trainer?.FullName</h5>
-                        <p class="card-text">
-                            <strong>Uzmanlık:</strong> @item.Trainer?.Expertise <br/>
-                            <strong>Tarih:</strong> @item.Date.ToString("dd.MM.yyyy") <br/>
-                            <strong>Saat:</strong> @item.Date.ToString("HH:mm")
-                        </p>
-                        <hr/>
-                        <p class="fw-bold">@statusText</p>
-
-                        @if (item.IsAvailable)
-                        {
-                            <form asp-action="Book" method="post">
-                                <input type="hidden" name="id" value="@item.Id" />
-                                <button type="submit" class="btn btn-success w-100">Randevu Al</button>
-                            </form>
-                        }
-                        else if (item.MemberId == currentUser?.Id || User.IsInRole("Admin"))
-                        {
-                            <form asp-action="Cancel" method="post">
-                                <input type="hidden" name="id" value="@item.Id" />
-                                <button type="submit" class="btn btn-danger w-100">İptal Et</button>
-                            </form>
-                        }
-                    </div>
+    <div class="card shadow-sm mb-4 bg-light">
+        <div class="card-body">
+            <form method="get" class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label fw-bold">Eğitmen Filtrele</label>
+                    <select name="trainerId" class="form-select" asp-items="Model.Trainers">
+                        <option value="">-- Tüm Eğitmenler --</option>
+                    </select>
                 </div>
-            </div>
-        }
+                <div class="col-md-4">
+                    <label class="form-label fw-bold">Gün Filtrele</label>
+                    <select name="day" class="form-select">
+                        <option value="">-- Tüm Günler --</option>
+                        <!option value="Monday" @(Model.SelectedDay == DayOfWeek.Monday ? "selected" : "")>Pazartesi</!option>
+                        <!option value="Tuesday" @(Model.SelectedDay == DayOfWeek.Tuesday ? "selected" : "")>Salı</!option>
+                        <!option value="Wednesday" @(Model.SelectedDay == DayOfWeek.Wednesday ? "selected" : "")>Çarşamba</!option>
+                        <!option value="Thursday" @(Model.SelectedDay == DayOfWeek.Thursday ? "selected" : "")>Perşembe</!option>
+                        <!option value="Friday" @(Model.SelectedDay == DayOfWeek.Friday ? "selected" : "")>Cuma</!option>
+                        <!option value="Saturday" @(Model.SelectedDay == DayOfWeek.Saturday ? "selected" : "")>Cumartesi</!option>
+                        <!option value="Sunday" @(Model.SelectedDay == DayOfWeek.Sunday ? "selected" : "")>Pazar</!option>
+                    </select>
+                </div>
+                <div class="col-md-4 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary me-2 w-50"><i class="bi bi-filter"></i> Uygula</button>
+                    <a asp-action="Index" class="btn btn-secondary w-50">Temizle</a>
+                </div>
+            </form>
+        </div>
     </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered shadow-sm align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Tarih / Saat</th>
+                    <th>Eğitmen</th>
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <th>Randevu Alan Üye</th> }
+
+                    <th>Durum</th>
+                    <th style="min-width: 150px;">İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Appointments)
+                {
+                    <tr>
+                        <td>
+                            <div class="fw-bold">@item.Date.ToString("dd MMMM yyyy")</div>
+                            <div class="text-muted small">@item.Date.ToString("HH:mm") - @item.Date.AddHours(1).ToString("HH:mm")</div>
+                            <span class="badge bg-light text-light border">@item.Date.ToString("dddd")</span>
+                        </td>
+
+                        <td>@item.Trainer.FullName</td>
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <td>
+                                @if (item.Member != null)
+                                {
+                                    <span class="fw-bold text-primary">@item.Member.UserName</span>
+                                    <br />
+                                    <small class="text-muted">@item.Member.Email</small>
+                                }
+                                else
+                                {
+                                    <span class="text-muted fst-italic">- Boş -</span>
+                                }
+                            </td>
+                        }
+
+                        <td>
+                            @if (item.MemberId == null)
+                            {
+                                <span class="badge bg-success">Müsait</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">Dolu</span>
+                                @if (!item.IsApproved)
+                                {
+                                    <span class="badge bg-warning text-dark">Onay Bekliyor</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-primary">Onaylandı</span>
+                                }
+                            }
+                        </td>
+
+                        <td>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                // --- ADMIN İŞLEMLERİ ---
+                                if (item.MemberId != null)
+                                {
+                                    // 1. Onay Butonu (Eğer onaylı değilse göster)
+                                    if (!item.IsApproved)
+                                    {
+                                        <form asp-action="Approve" method="post" class="d-inline mb-1">
+                                            <input type="hidden" name="id" value="@item.Id" />
+                                            <button type="submit" class="btn btn-sm btn-warning w-100 mb-1">
+                                                <i class="bi bi-check-circle"></i> Onayla
+                                            </button>
+                                        </form>
+                                    }
+
+                                    // 2. İptal / Reddet Butonu
+                                    <form asp-action="Cancel" method="post" class="d-inline">
+                                        <input type="hidden" name="id" value="@item.Id" />
+                                        <button type="submit" class="btn btn-sm btn-danger w-100" onclick="return confirm('Bu randevuyu iptal etmek istediğinize emin misiniz?');">
+                                            <i class="bi bi-x-circle"></i> İptal Et
+                                        </button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    // Boşsa Admin de silebilir (Opsiyonel) veya boş bırakır
+                                    <span class="text-muted small">Henüz alınmadı</span>
+                                }
+                            }
+                            else
+                            {
+                                // --- NORMAL ÜYE İŞLEMLERİ ---
+                                if (item.MemberId == null)
+                                {
+                                    <form asp-action="Book" method="post">
+                                        <input type="hidden" name="id" value="@item.Id" />
+                                        <button type="submit" class="btn btn-sm btn-success w-100">
+                                            <i class="bi bi-plus-circle"></i> Randevu Al
+                                        </button>
+                                    </form>
+                                }
+                                else
+                                {
+
+                                    <button class="btn btn-sm btn-secondary w-100" disabled>Dolu</button>
+                                }
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @if(Model.Appointments.Count == 0)
+    {
+        <div class="alert alert-warning text-center">
+            Seçilen kriterlere uygun randevu bulunamadı.
+        </div>
+    }
 </div>

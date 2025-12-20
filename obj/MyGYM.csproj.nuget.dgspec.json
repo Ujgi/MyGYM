@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/utkusekeroglu/Desktop/RiderProjects/MyGYM/MyGYM.csproj": {}
+    "/Users/utkusekeroglu/Desktop/Web Programlama Proje/MyGYM.csproj": {}
   },
   "projects": {
-    "/Users/utkusekeroglu/Desktop/RiderProjects/MyGYM/MyGYM.csproj": {
+    "/Users/utkusekeroglu/Desktop/Web Programlama Proje/MyGYM.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/utkusekeroglu/Desktop/RiderProjects/MyGYM/MyGYM.csproj",
+        "projectUniqueName": "/Users/utkusekeroglu/Desktop/Web Programlama Proje/MyGYM.csproj",
         "projectName": "MyGYM",
-        "projectPath": "/Users/utkusekeroglu/Desktop/RiderProjects/MyGYM/MyGYM.csproj",
+        "projectPath": "/Users/utkusekeroglu/Desktop/Web Programlama Proje/MyGYM.csproj",
         "packagesPath": "/Users/utkusekeroglu/.nuget/packages/",
-        "outputPath": "/Users/utkusekeroglu/Desktop/RiderProjects/MyGYM/obj/",
+        "outputPath": "/Users/utkusekeroglu/Desktop/Web Programlama Proje/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/utkusekeroglu/.nuget/NuGet/NuGet.Config"
@@ -57,11 +57,23 @@
               "target": "Package",
               "version": "[8.0.22, )"
             },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[8.0.22, )"
+            },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
               "version": "[8.0.22, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[8.0.22, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.4, )"
             },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",

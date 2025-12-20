@@ -20,22 +20,47 @@ namespace MyGYM.Controllers
             _userManager = userManager;
         }
 
-        // 1. MÜSAİT RANDEVULARI LİSTELE
-        public async Task<IActionResult> Index()
+        // 1. MÜSAİT RANDEVULARI LİSTELE VE FİLTRELE
+        public async Task<IActionResult> Index(int? trainerId, DayOfWeek? day)
         {
-            // Sadece boş olanları (Müsait) veya benim aldıklarımı getir
-            // Admin hepsini görsün, Üye sadece boşları görsün mantığı da kurulabilir.
-            // Şimdilik: Tüm randevuları hoca bilgisiyle getiriyoruz.
-            var appointments = await _context.Appointments
+            // 1. Temel Sorgu (Henüz veritabanına gitmedi, hazırlık)
+            // AsQueryable() diyerek sorguyu dinamik hale getiriyoruz.
+            var query = _context.Appointments
                 .Include(a => a.Trainer)
                 .Include(a => a.Member)
-                .OrderBy(a => a.Date)
-                .ToListAsync();
+                .AsQueryable();
 
-            return View(appointments);
+            // 2. Hoca Filtresi: Eğer kullanıcı bir hoca seçtiyse sorguya ekle
+            if (trainerId.HasValue)
+            {
+                query = query.Where(a => a.TrainerId == trainerId.Value);
+            }
+
+            // 3. Gün Filtresi: Eğer kullanıcı bir gün seçtiyse
+            // SQL tarafında DayOfWeek fonksiyonunu çalıştırır.
+            if (day.HasValue)
+            {
+                query = query.Where(a => a.Date.DayOfWeek == day.Value);
+            }
+
+            // 4. Sonuçları Çek (Şimdi veritabanına gider)
+            var appointments = await query.OrderBy(a => a.Date).ToListAsync();
+
+            // 5. Filtreleme Dropdown'ı için Hoca Listesini Hazırla
+            var trainerList = new SelectList(await _context.Antrenors.ToListAsync(), "Id", "FullName", trainerId);
+
+            var model = new AppointmentFilterViewModel
+            {
+                Appointments = appointments,
+                Trainers = trainerList,
+                SelectedTrainerId = trainerId,
+                SelectedDay = day
+            };
+
+            return View(model);
         }
 
-        // 2. ADMİN: YENİ MÜSAİTLİK EKLE (Create)
+        // 2. ADMİN: YENİ DERS EKLE (Create)
         [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
@@ -45,14 +70,45 @@ namespace MyGYM.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Appointment appointment)
+        public async Task<IActionResult> Create(Appointment appointment, int selectedHour)
         {
-            // Admin sadece tarih ve hoca seçer, MemberId boştur.
-            _context.Add(appointment);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+
+            appointment.Date = appointment.Date.Date.AddHours(selectedHour);
+
+            if (appointment.Date <= DateTime.Now)
+            {
+                ModelState.AddModelError("", "Geçmiş bir tarih veya saate randevu açılamaz.");
+            }
+
+            if (appointment.Date.Hour < 9 || appointment.Date.Hour >= 22)
+            {
+                ModelState.AddModelError("", "Lütfen geçerli mesai saatleri seçiniz.");
+            }
+
+            // 3. ÇAKIŞMA KONTROLÜ
+            bool isBooked = await _context.Appointments.AnyAsync(x =>
+                x.TrainerId == appointment.TrainerId &&
+                x.Date == appointment.Date);
+
+            if (isBooked)
+            {
+                ModelState.AddModelError("", $"Seçtiğiniz antrenör saat {selectedHour}:00'da zaten dolu.");
+            }
+
+            // 4. KAYIT İŞLEMİ
+            if (ModelState.IsValid)
+            {
+                _context.Add(appointment);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+
+            // Hata varsa listeyi tekrar doldur
+            ViewData["TrainerId"] = new SelectList(_context.Antrenors, "Id", "FullName", appointment.TrainerId);
+
+            return View(appointment);
         }
 
         // 3. ÜYE: RANDEVU AL (Book)
@@ -61,20 +117,18 @@ namespace MyGYM.Controllers
         public async Task<IActionResult> Book(int id)
         {
             var appointment = await _context.Appointments.FindAsync(id);
-
-            if (appointment == null || !appointment.IsAvailable)
-            {
-                return NotFound(); // Zaten alınmışsa hata ver
-            }
-
-            // Şu anki giriş yapmış kullanıcının ID'sini al
             var user = await _userManager.GetUserAsync(User);
 
-            appointment.MemberId = user.Id; // Randevuyu kullanıcıya kitle
+            if (appointment != null && user != null)
+            {
+                // Randevuyu kullanıcıya ata
+                appointment.MemberId = user.Id;
 
-            _context.Update(appointment);
-            await _context.SaveChangesAsync();
+                // ÖNEMLİ: Randevu alındı ama henüz onaylanmadı!
+                appointment.IsApproved = false;
 
+                await _context.SaveChangesAsync();
+            }
             return RedirectToAction(nameof(Index));
         }
 
@@ -99,5 +153,21 @@ namespace MyGYM.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
+
+        // Adminin randevuyu onaylaması için
+        [HttpPost]
+        [Authorize(Roles = "Admin")] // Sadece Admin
+        public async Task<IActionResult> Approve(int id)
+        {
+            var appointment = await _context.Appointments.FindAsync(id);
+            if (appointment != null)
+            {
+                appointment.IsApproved = true; // Onaylandı
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+
     }
 }

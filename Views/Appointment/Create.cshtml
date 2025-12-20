@@ -1,22 +1,45 @@
 @model MyGYM.Models.Appointment
 
-@{ ViewData["Title"] = "Müsaitlik Ekle"; }
+@{ ViewData["Title"] = "Ders Ekle"; }
 
 <div class="container mt-5">
-    <h2>🕒 Yeni Müsaitlik Zamanı Ekle (Admin)</h2>
+    <h2>🕒 Yeni Ders Ekle </h2>
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-5">
             <form asp-action="Create">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
                 <div class="mb-3">
                     <label class="form-label">Antrenör Seç</label>
                     <select asp-for="TrainerId" class="form-control" asp-items="ViewBag.TrainerId"></select>
                 </div>
+
                 <div class="mb-3">
-                    <label asp-for="Date" class="form-label">Tarih ve Saat</label>
-                    <input asp-for="Date" class="form-control" type="datetime-local" />
+                    <label class="form-label">Tarih Seçiniz</label>
+                    <input asp-for="Date" type="date" class="form-control"
+                           value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                    <span asp-validation-for="Date" class="text-danger"></span>
                 </div>
-                <button type="submit" class="btn btn-primary">Müsaitliği Aç</button>
+
+                <div class="mb-3">
+                    <label class="form-label">Saat Seçiniz</label>
+
+                    <select name="selectedHour" class="form-control">
+                        @for (int i = 9; i < 22; i++) // 09:00'dan 21:00'a kadar döner
+                        {
+                            <option value="@i">@i:00</option>
+                        }
+                    </select>
+                    <small class="text-muted">Mesai saatleri: 09:00 - 21:00</small>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Dersi Aç</button>
             </form>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

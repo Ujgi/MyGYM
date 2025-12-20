@@ -1,22 +1,160 @@
-html {
-  font-size: 14px;
+/* --- PREMİUM GYM TEMASI (Dark Mode) --- */
+
+:root {
+    --primary-red: #E31C25;       /* MyGYM Kırmızısı */
+    --primary-red-hover: #c0151d; /* Buton üzerine gelinceki renk */
+    --bg-dark: #121212;           /* Ana Arka Plan */
+    --card-bg: #1E1E1E;           /* Kart Arka Planı */
+    --text-main: #f5f5f5;         /* Ana Yazı Rengi */
+    --text-muted: #b0b0b0;        /* İkincil Yazı Rengi */
+    --input-bg: #2d2d2d;          /* Form Kutuları */
+    --border-color: #333333;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
+/* 1. GENEL SAYFA YAPISI */
 body {
-  margin-bottom: 60px;
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+}
+
+/* Linkler */
+a {
+    color: var(--primary-red);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+a:hover {
+    color: #ff4d4d;
+}
+
+/* Başlıklar */
+h1, h2, h3, h4, h5, h6 {
+    color: #ffffff;
+    font-weight: 700; /* Kalın ve güçlü */
+    letter-spacing: 0.5px;
+}
+
+/* 2. KART TASARIMLARI (Bootstrap Card Override) */
+.card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Hafif gölge */
+    border-radius: 12px;
+}
+
+.card-header {
+    background-color: rgba(227, 28, 37, 0.1); /* Kırmızının çok şeffaf hali */
+    border-bottom: 1px solid var(--border-color);
+    color: var(--primary-red);
+    font-weight: bold;
+}
+
+/* 3. BUTONLAR */
+.btn-primary {
+    background-color: var(--primary-red);
+    border-color: var(--primary-red);
+    color: white;
+    font-weight: 600;
+    padding: 10px 25px;
+    border-radius: 50px; /* Yuvarlak modern butonlar */
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-red-hover);
+    border-color: var(--primary-red-hover);
+    transform: translateY(-2px); /* Tıklama hissi */
+    box-shadow: 0 5px 15px rgba(227, 28, 37, 0.4);
+}
+
+.btn-outline-light {
+    border-radius: 50px;
+}
+.btn-outline-secondary {
+    color: #ccc;
+    border-color: #666;
+}
+.btn-outline-secondary:hover {
+    background-color: #666;
+    color: white;
+}
+
+/* 4. FORM ELEMANLARI (Inputlar) */
+/* Beyaz inputlar karanlık temada göz alır, onları da koyulaştıralım */
+.form-control, .form-select {
+    background-color: var(--input-bg);
+    border: 1px solid var(--border-color);
+    color: white;
+    border-radius: 8px;
+    padding: 12px;
+}
+
+.form-control:focus, .form-select:focus {
+    background-color: #333;
+    border-color: var(--primary-red); /* Tıklayınca kırmızı yanar */
+    color: white;
+    box-shadow: 0 0 0 0.25rem rgba(227, 28, 37, 0.25);
+}
+
+/* Placeholder rengini düzeltme */
+.form-control::placeholder {
+    color: #888;
+}
+
+/* 5. NAVBAR (Menü) */
+.navbar {
+    background-color: rgba(30, 30, 30, 0.95) !important; /* Hafif şeffaf koyu gri */
+    backdrop-filter: blur(10px); /* Arkası buzlu cam gibi görünsün */
+    border-bottom: 1px solid #333;
+}
+
+.navbar-brand {
+    color: white !important;
+    font-weight: 900;
+    font-size: 1.5rem;
+}
+.navbar-brand span {
+    color: var(--primary-red); /* Logo içindeki bir harfi kırmızı yapmak istersen */
+}
+
+/* 6. TABLOLAR (Eğer kullanırsan) */
+.table {
+    color: var(--text-main);
+    border-color: var(--border-color);
+}
+.table-hover tbody tr:hover {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* 7. LOGIN & REGISTER ARKAPLANI (Önceki kodu koruyoruz) */
+.login-bg {
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1470&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/* Login Kartı Koyu Tema Uyumu */
+.login-card {
+    background-color: var(--card-bg);
+    border: 1px solid #333;
+    color: white;
+    border-radius: 15px;
+    padding: 40px;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+}
+
+/* 8. ÖZEL HELPER CLASSLAR */
+.text-muted {
+    color: var(--text-muted) !important;
+}
+.bg-light {
+    background-color: var(--card-bg) !important; /* Bootstrap'in bg-light'ını koyu griye çeviriyoruz */
 }

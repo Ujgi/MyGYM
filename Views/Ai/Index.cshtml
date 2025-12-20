@@ -1,0 +1,118 @@
+@model MyGYM.Models.AiKocViewModel
+
+@{
+    ViewData["Title"] = "AI Spor Hocası";
+}
+
+<div class="container py-5">
+    <div class="row">
+
+        <div class="col-lg-4 mb-4">
+            <div class="card shadow-lg border-0 rounded-4 h-100">
+
+                <div class="card-header bg-dark text-center py-4 rounded-top-4" style="border-bottom: 2px solid var(--primary-red);">
+                    <h3 class="mb-0 text-white fw-bold">🤖 MyGym AI Koç</h3>
+                    <small class="text-muted">Vücut Analiz Formu</small>
+                </div>
+
+                <div class="card-body p-4">
+                    <form asp-action="Index" method="post">
+
+                        <div class="mb-3">
+                            <label class="form-label text-light fw-bold">Yaşınız</label>
+                            <input asp-for="Yas" class="form-control form-control-lg" type="number" placeholder="Örn: 25" required />
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label class="form-label text-light fw-bold">Boy (cm)</label>
+                                <input asp-for="Boy" class="form-control" type="number" placeholder="180" required />
+                            </div>
+                            <div class="col">
+                                <label class="form-label text-light fw-bold">Kilo (kg)</label>
+                                <input asp-for="Kilo" class="form-control" type="number" placeholder="75" required />
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label text-light fw-bold">Cinsiyet</label>
+                            <select asp-for="Cinsiyet" class="form-select">
+                                <option>Erkek</option>
+                                <option>Kadın</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label text-light fw-bold">Hedefiniz Nedir?</label>
+                            <select asp-for="Hedef" class="form-select">
+                                <option>Kilo Vermek / Yağ Yakmak</option>
+                                <option>Kas Kütlesi Kazanmak</option>
+                                <option>Formu Korumak</option>
+                                <option>Kondisyon Artırmak</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label text-light fw-bold">Aktivite Seviyesi</label>
+                            <select asp-for="Aktivite" class="form-select">
+                                <option>Hareketsiz (Ofis çalışanı)</option>
+                                <option>Orta (Haftada 1-2 spor)</option>
+                                <option>Çok Aktif (Haftada 4+ spor)</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100 py-3 fw-bold rounded-pill shadow-sm">
+                            ✨ Programımı Oluştur
+                        </button>
+                    </form>
+
+                    @if(ViewBag.Error != null)
+                    {
+                        <div class="alert alert-danger mt-3 text-center border-0 small">
+                            <i class="bi bi-exclamation-triangle-fill"></i> @ViewBag.Error
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-8">
+            @if (Model != null && !string.IsNullOrEmpty(Model.YapayZekaCevabi))
+            {
+                <div class="card shadow-lg border-0 rounded-4">
+                    <div class="card-header bg-dark py-4 px-4 rounded-top-4 d-flex align-items-center justify-content-between" style="border-bottom: 1px solid #333;">
+                        <h4 class="mb-0 text-white fw-bold">
+                            <i class="bi bi-clipboard-data text-danger me-2"></i>Sana Özel Program
+                        </h4>
+                        <span class="badge bg-danger rounded-pill">Hazır!</span>
+                    </div>
+
+                    <div class="card-body p-4 bg-dark text-light">
+                        <div class="ai-response-content" style="white-space: pre-wrap; font-family: 'Segoe UI', sans-serif; line-height: 1.8; font-size: 1.05rem; color: #e0e0e0;">
+                            @Model.YapayZekaCevabi.Replace("**", "").Replace("##", "")
+                        </div>
+                    </div>
+
+                    <div class="card-footer bg-dark text-center py-3 border-top border-secondary">
+                        <small class="text-muted fst-italic">
+                            <i class="bi bi-google"></i> Bu program <strong>Google Gemini AI</strong> altyapısı ile oluşturulmuştur.
+                        </small>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="card border-0 bg-transparent h-100 d-flex justify-content-center align-items-center text-center p-5" style="opacity: 0.7;">
+                    <div class="py-5">
+                        <i class="bi bi-cpu text-danger display-1 mb-4"></i>
+                        <h3 class="text-white fw-bold">Gemini AI Analizi Bekliyor</h3>
+                        <p class="text-muted fs-5">
+                            Sol taraftaki formu doldurarak<br>
+                            sana özel antrenman ve beslenme planını alabilirsin.
+                        </p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

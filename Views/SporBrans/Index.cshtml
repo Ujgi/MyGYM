@@ -4,7 +4,7 @@
 
 <div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>🧘‍♀️ Spor Hizmetleri</h2>
+        <h2>🧘‍♀️ Spor Branşları </h2>
         @if (User.IsInRole("Admin"))
         {
             <a asp-action="Create" class="btn btn-primary">+ Yeni Hizmet Ekle</a>
@@ -15,10 +15,9 @@
     <table class="table table-bordered table-hover">
         <thead class="table-dark">
         <tr>
-            <th>Hizmet Adı</th>
+            <th>Branşlar</th>
             <th>Süre (Dk)</th>
             <th>Ücret (TL)</th>
-            <th>İşlemler</th>
         </tr>
         </thead>
         <tbody>

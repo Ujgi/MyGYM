@@ -1,8 +1,167 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Ana Sayfa";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="hero-section text-center text-white d-flex align-items-center justify-content-center"
+     style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1470&auto=format&fit=crop'); background-size: cover; height: 85vh; border-radius: 0 0 50px 50px;">
+    <div class="container">
+        <span class="badge bg-danger mb-3 px-3 py-2 rounded-pill">YENİ NESİL SPOR SALONU</span>
+        <h1 class="display-2 fw-bold mb-3">SINIRLARINI ZORLA</h1>
+        <p class="lead mb-5 opacity-75 mx-auto" style="max-width: 700px;">
+            Sıradan programları unut. MyGYM ile yapay zeka destekli antrenman ve beslenme programın saniyeler içinde cebinde.
+        </p>
+        <div class="d-flex justify-content-center gap-3">
+            <a asp-controller="Ai" asp-action="Index" class="btn btn-primary btn-lg shadow-lg">
+                🤖 AI Koçunu Dene
+            </a>
+
+        </div>
+    </div>
+</div>
+
+<div class="container py-5">
+    <div class="row text-center justify-content-center g-4">
+
+        <div class="col-md-4">
+            <div class="stat-item p-4 shadow-sm rounded bg-light">
+                <h3 class="fw-bold text-danger">500+</h3>
+                <p class="text-muted mb-0">Mutlu Üye</p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="stat-item p-4 shadow-sm rounded bg-light">
+                <h3 class="fw-bold text-danger">15+</h3>
+                <p class="text-muted mb-0">Uzman Eğitmen</p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="stat-item p-4 shadow-sm rounded bg-light">
+                <h3 class="fw-bold text-danger">20+</h3>
+                <p class="text-muted mb-0">Grup Dersi</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<hr class="my-5 opacity-25">
+
+<div class="container py-5">
+    <div class="row align-items-center">
+        <div class="col-md-6 mb-4 mb-md-0">
+            <img src="https://i0.wp.com/www.muscleandfitness.com/wp-content/uploads/2020/12/PX3_0006.jpg?quality=86&strip=all"
+                 class="img-fluid rounded-4 shadow-lg" alt="AI Technology">
+        </div>
+        <div class="col-md-6 ps-md-5">
+            <h6 class="text-danger fw-bold">YAPAY ZEKA DESTEĞİ</h6>
+            <h2 class="fw-bold display-5 mb-3">Kişisel Koçun Artık Cebinde</h2>
+            <p class="text-muted lead">
+                Yapay zeka ile çalışan akıllı koçumuz; vücut tipine, hedefine ve yaşam tarzına göre sana özel programlar hazırlar.
+            </p>
+            <ul class="list-unstyled mt-4">
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> Kişiye özel antrenman planı</li>
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> Günlük kalori ve makro hesabı</li>
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> Anlık soru-cevap desteği</li>
+            </ul>
+            <a asp-controller="Ai" asp-action="Index" class="btn btn-dark mt-3">Hemen Dene <i class="bi bi-arrow-right ms-2"></i></a>
+        </div>
+    </div>
+</div>
+
+<div class="bg-light py-5 mt-5 rounded-4">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Neler Sunuyoruz?</h2>
+            <p class="text-muted">Sadece spor değil, bir yaşam tarzı.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="feature-box text-center h-100">
+                    <div class="fs-1 text-primary mb-3">🏋️‍♂️</div>
+                    <h4>Modern Ekipmanlar</h4>
+                    <p class="text-muted small">Son teknoloji Technogym serisi ekipmanlarla kas gelişimini maksimuma çıkar.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-box text-center h-100">
+                    <div class="fs-1 text-primary mb-3">🧘‍♀️</div>
+                    <h4>Grup Dersleri</h4>
+                    <p class="text-muted small">Yoga, Pilates, Zumba ve Spinning dersleriyle hem eğlen hem forma gir.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-box text-center h-100">
+                    <div class="fs-1 text-primary mb-3">🥗</div>
+                    <h4>Diyetisyen Desteği</h4>
+                    <p class="text-muted small">Vücut analizine göre hazırlanan beslenme programları ile hedefine ulaş.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container py-5 my-5">
+    <div class="text-center mb-5">
+        <h2 class="fw-bold">Üyelik Paketleri</h2>
+        <p class="text-muted">Sana en uygun planı seç.</p>
+    </div>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="pricing-card shadow-sm h-100">
+                <div class="pricing-header text-center">
+                    <h4>Başlangıç</h4>
+                    <h2 class="display-4 fw-bold">₺750<small class="fs-6">/ay</small></h2>
+                </div>
+                <div class="card-body p-4 text-center">
+                    <ul class="list-unstyled mb-4">
+                        <li class="mb-2">Giriş Saatleri: 09:00 - 17:00</li>
+                        <li class="mb-2">Temel Ekipmanlar</li>
+                        <li class="mb-2 text-muted text-decoration-line-through">Grup Dersleri</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="pricing-card popular shadow h-100">
+                <div class="popular-badge">EN ÇOK TERCİH EDİLEN</div>
+                <div class="pricing-header bg-danger text-center">
+                    <h4>Gold Üyelik</h4>
+                    <h2 class="display-4 fw-bold">₺1200<small class="fs-6">/ay</small></h2>
+                </div>
+                <div class="card-body p-4 text-center">
+                    <ul class="list-unstyled mb-4">
+                        <li class="mb-2"><strong>7/24 Sınırsız Giriş</strong></li>
+                        <li class="mb-2">Tüm Ekipmanlar</li>
+                        <li class="mb-2">Grup Dersleri (Sınırsız)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="pricing-card shadow-sm h-100">
+                <div class="pricing-header text-center">
+                    <h4>VIP Private</h4>
+                    <h2 class="display-4 fw-bold">₺2500<small class="fs-6">/ay</small></h2>
+                </div>
+                <div class="card-body p-4 text-center">
+                    <ul class="list-unstyled mb-4">
+                        <li class="mb-2">Her Şey Dahil</li>
+                        <li class="mb-2">Özel Havlu & Dolap</li>
+                        <li class="mb-2">Haftada 2 Gün Özel Ders (PT)</li>
+                        <li class="mb-2">Spa & Sauna</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid bg-dark text-white text-center py-5">
+    <h2 class="fw-bold">Hala düşünüyor musun?</h2>
+    <p class="lead mb-4">Bugün başla, yarın değişimi hisset.</p>
+    <a asp-controller="Appointment" asp-action="Index" class="btn btn-light btn-lg rounded-pill px-5">Randevu Al</a>
 </div>

@@ -16,18 +16,13 @@ namespace MyGYM.Controllers
             _context = context;
         }
 
-        // ==========================================
         // 1. LİSTELEME (Index)
-        // ==========================================
         public async Task<IActionResult> Index()
         {
-            // Veritabanındaki tüm antrenörleri listeye çevirip View'a gönder
             return View(await _context.Antrenors.ToListAsync());
         }
 
-        // ==========================================
         // 2. EKLEME (Create)
-        // ==========================================
 
         // Formu Göster (GET)
         [Authorize(Roles = "Admin")]
@@ -51,9 +46,8 @@ namespace MyGYM.Controllers
             return View(trainer); // Hata varsa formu tekrar göster
         }
 
-        // ==========================================
         // 3. DÜZENLEME (Edit)
-        // ==========================================
+
 
         // Düzenleme Formunu Göster (GET)
         [Authorize(Roles = "Admin")]
@@ -94,11 +88,10 @@ namespace MyGYM.Controllers
             return View(trainer);
         }
 
-        // ==========================================
-        // 4. SİLME (Delete)
-        // ==========================================
 
-        // Silme Onay Ekranını Göster (GET)
+        // 4. SİLME (Delete)
+
+
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -112,7 +105,6 @@ namespace MyGYM.Controllers
             return View(trainer);
         }
 
-        // Silme İşlemini Gerçekleştir (POST)
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]

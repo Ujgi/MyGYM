@@ -19,6 +19,8 @@ namespace MyGYM.Models
         [Display(Name = "Randevu Tarihi")]
         public DateTime Date { get; set; }
 
+        public bool IsApproved { get; set; } = false; // Varsayılan: Onaysız
+
         // Durumu (Dolu mu boş mu?)
         // Eğer MemberId null ise "Müsait", doluysa "Randevu Alındı" demektir.
         public bool IsAvailable => String.IsNullOrEmpty(MemberId);
